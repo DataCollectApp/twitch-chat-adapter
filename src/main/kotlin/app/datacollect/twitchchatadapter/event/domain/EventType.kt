@@ -1,0 +1,13 @@
+package app.datacollect.twitchchatadapter.event.domain
+
+enum class EventType {
+    CHAT_MESSAGE_SNAPSHOT,
+    CLEAR_CHAT_SNAPSHOT,
+    GLOBAL_CLEAR_CHAT_SNAPSHOT,
+    CLEAR_MESSAGE_SNAPSHOT,
+    HOST_ENABLED,
+    HOST_DISABLED,
+    USER_JOIN_SNAPSHOT,
+    USER_LEAVE_SNAPSHOT,
+    USER_NOTICE_SNAPSHOT
+}

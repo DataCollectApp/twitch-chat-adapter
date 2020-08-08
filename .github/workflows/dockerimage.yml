@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build image
+        run: docker build --tag twitch-chat-adapter:0.1.0 .
+      - name: Deploy to Github Package Registry
+        env:
+          DOCKER_REGISTRY_URL: docker.pkg.github.com
+          DOCKER_USERNAME: DataCollectApp
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login "$DOCKER_REGISTRY_URL" -u "$DOCKER_USERNAME" --password-stdin
+          docker tag twitch-chat-adapter:0.1.0 docker.pkg.github.com/datacollectapp/twitch-chat-adapter/twitch-chat-adapter:0.1.0
+          docker push docker.pkg.github.com/datacollectapp/twitch-chat-adapter/twitch-chat-adapter:0.1.0
